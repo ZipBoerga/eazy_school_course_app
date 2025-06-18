@@ -2,9 +2,12 @@ package com.zip_boerga.eazy_school.controller;
 
 import com.zip_boerga.eazy_school.model.Contact;
 import com.zip_boerga.eazy_school.service.ContactService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,14 +24,21 @@ public class ContactController {
     }
 
     @GetMapping("/contact")
-    public String displayControllerPage() {
+    public String displayControllerPage(Model model) {
+        model.addAttribute("contact", new Contact());
         return "contact.html";
     }
 
-    @PostMapping("/saveMsg")
-    public ModelAndView saveMessage(@RequestBody Contact contact) {
+    @PostMapping("/contact")
+    public String saveMessage(@Valid @ModelAttribute("contact") Contact contact, Errors errors) {
+        log.info("Current ContactService instance is {}", this.contactService);
+        if (errors.hasErrors()) {
+            log.error("Contact form validation failed due to: {}", errors);
+            return "contact.html";
+        }
         contactService.saveMessageDetails(contact);
-        return new ModelAndView("redirect:/contact");
+        log.info("The counter of contactService is {}", contactService.getCounter());
+        return "redirect:/contact";
     }
 
 }
