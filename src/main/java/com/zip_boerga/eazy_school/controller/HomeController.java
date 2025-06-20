@@ -8,7 +8,6 @@ public class HomeController {
 
     @GetMapping({"/", "", "home"})
     public String displayHomePage() {
-        throw new RuntimeException("It's been a bad day!");
-//        return "home.html";
+        return "home";
     }
 }

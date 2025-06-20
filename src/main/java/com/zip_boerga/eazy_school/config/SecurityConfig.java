@@ -17,8 +17,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests(requests -> requests
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/contact"))
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/home", "/").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout").permitAll()
                         // temporarily
                         .requestMatchers("/api/debug/**").permitAll()
                 ).formLogin(loginConfigurer -> loginConfigurer
