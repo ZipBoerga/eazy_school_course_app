@@ -26,7 +26,7 @@ public class ContactController {
     @GetMapping("/contact")
     public String displayControllerPage(Model model) {
         model.addAttribute("contact", new Contact());
-        return "contact.html";
+        return "contact";
     }
 
     @PostMapping("/contact")
@@ -34,10 +34,9 @@ public class ContactController {
         log.info("Current ContactService instance is {}", this.contactService);
         if (errors.hasErrors()) {
             log.error("Contact form validation failed due to: {}", errors);
-            return "contact.html";
+            return "contact";
         }
         contactService.saveMessageDetails(contact);
-        log.info("The counter of contactService is {}", contactService.getCounter());
         return "redirect:/contact";
     }
 

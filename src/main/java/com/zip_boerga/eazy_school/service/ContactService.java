@@ -1,34 +1,41 @@
 package com.zip_boerga.eazy_school.service;
 
+import com.zip_boerga.eazy_school.model.Constants;
 import com.zip_boerga.eazy_school.model.Contact;
+import com.zip_boerga.eazy_school.repository.ContactRepository;
 import jakarta.annotation.PostConstruct;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.ApplicationScope;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
+
+import java.time.LocalDateTime;
 
 
-@Getter
 @Slf4j
 @Service
-//@RequestScope
-//@SessionScope
-@ApplicationScope
 public class ContactService {
-    private int counter = 0;
+    private final ContactRepository contactRepository;
+
+    @Autowired
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     @PostConstruct
     public void postInit() {
         log.info("ContactService bean initialized: {}", this);
     }
 
-    public boolean saveMessageDetails(Contact contact){
-        boolean isSaved = true;
-        log.info(contact.toString());
-        counter++;
+    // i do not like semantics
+    public boolean saveMessageDetails(Contact contact) {
+        boolean isSaved = false;
+        contact.setStatus(Constants.OPEN.toString());
+        contact.setCreatedBy(Constants.ANONYMOUS.toString());
+        contact.setCreatedAt(LocalDateTime.now());
+        int result = contactRepository.saveContactMessage(contact);
+        if (result > 0) {
+            isSaved = true;
+        }
         return isSaved;
     }
-
 }
