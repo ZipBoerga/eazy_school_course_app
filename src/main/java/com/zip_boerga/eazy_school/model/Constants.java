@@ -1,14 +1,9 @@
 package com.zip_boerga.eazy_school.model;
 
-public enum Constants {
-    ANONYMOUS,
-    OPEN,
-    CLOSE;
+public class Constants {
+    public static final String ANONYMOUS = "Anonymous";
+    public static final String OPEN = "Open";
+    public static final String CLOSED = "Closed";
 
-    @Override
-    public String toString() {
-        String name = this.name();
-        return name.substring(0, 1).toUpperCase() +
-                name.substring(1).toLowerCase();
-    }
+    private Constants() {}
 }
