@@ -1,5 +1,6 @@
 package com.zip_boerga.eazy_school.repository;
 
+import com.zip_boerga.eazy_school.aspects.audit.AuditContext;
 import com.zip_boerga.eazy_school.model.Contact;
 import com.zip_boerga.eazy_school.repository.rowmappers.ContactRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,12 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     @Override
-    public int updateMessageStatus(int id, String updaterName, String messageStatus) {
+    public int updateMessageStatus(int id, String messageStatus) {
+        String username = AuditContext.get();
         String query = "UPDATE contact_message SET STATUS = ?, UPDATED_BY = ?, UPDATED_AT = ? WHERE CONTACT_ID = ?";
         return jdbcTemplate.update(query,
                 messageStatus,
-                updaterName,
+                username,
                 Timestamp.valueOf(LocalDateTime.now()),
                 id);
     }

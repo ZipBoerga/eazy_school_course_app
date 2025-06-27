@@ -51,9 +51,8 @@ public class ContactController {
     }
 
     @PostMapping("/messages/{id}/close")
-    public String closeMessage(@PathVariable int id, Authentication authentication) {
-        String updaterName = authentication.getName();
-        contactService.updateMessageStatus(id, updaterName, Constants.CLOSED);
+    public String closeMessage(@PathVariable int id) {
+        contactService.updateMessageStatus(id, Constants.CLOSED);
         return "redirect:/messages";
     }
 }

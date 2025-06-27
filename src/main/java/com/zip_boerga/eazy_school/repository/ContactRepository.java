@@ -7,5 +7,5 @@ import java.util.List;
 public interface ContactRepository {
     int saveContactMessage(Contact contact);
     List<Contact> findMessageByStatus(String status);
-    int updateMessageStatus(int id, String updaterName, String status);
+    int updateMessageStatus(int id, String status);
 }

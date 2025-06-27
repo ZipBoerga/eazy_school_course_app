@@ -21024,6 +21024,10 @@ h4.inner-text-title {
   margin-top: 15px;
 }
 
+.description h6 i.fas.fa-calendar-alt {
+  margin-right: 8px; /* Add space between icon and text */
+}
+
 .w3l-timeline-1 .main {
   width: 80%;
   margin-left: 10%;

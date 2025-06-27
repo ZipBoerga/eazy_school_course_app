@@ -44,8 +44,8 @@ public class ContactService {
         return contactRepository.findMessageByStatus(status);
     }
 
-    public boolean updateMessageStatus(int id, String updaterName, String status) {
-        int changedRowsCount = contactRepository.updateMessageStatus(id, updaterName, status);
+    public boolean updateMessageStatus(int id, String status) {
+        int changedRowsCount = contactRepository.updateMessageStatus(id, status);
         return changedRowsCount != 0;
     }
 }
