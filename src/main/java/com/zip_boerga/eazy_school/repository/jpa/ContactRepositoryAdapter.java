@@ -1,16 +1,11 @@
 package com.zip_boerga.eazy_school.repository.jpa;
 
-import com.zip_boerga.eazy_school.aspects.audit.AuditContext;
-import com.zip_boerga.eazy_school.model.Constants;
 import com.zip_boerga.eazy_school.model.Contact;
-import com.zip_boerga.eazy_school.model.Holiday;
 import com.zip_boerga.eazy_school.repository.interfaces.ContactRepository;
-import com.zip_boerga.eazy_school.repository.interfaces.HolidaysRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -45,8 +40,6 @@ public class ContactRepositoryAdapter implements ContactRepository {
 
         Contact contact = contactWrap.get();
         contact.setStatus(status);
-        contact.setUpdatedBy(AuditContext.get());
-        contact.setUpdatedAt(LocalDateTime.now());
 
         Contact updatedContact = jpaContactRepository.save(contactWrap.get());
 

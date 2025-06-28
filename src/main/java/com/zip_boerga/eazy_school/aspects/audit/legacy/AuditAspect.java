@@ -1,4 +1,4 @@
-package com.zip_boerga.eazy_school.aspects.audit;
+package com.zip_boerga.eazy_school.aspects.audit.legacy;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -6,8 +6,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-@Component
-@Aspect
+//@Component
+//@Aspect
+@Deprecated
 public class AuditAspect {
     @Before("within(@org.springframework.stereotype.Controller *)")
     public void setAuditContext() {

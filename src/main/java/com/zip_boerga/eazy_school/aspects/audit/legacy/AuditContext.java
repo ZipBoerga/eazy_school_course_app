@@ -1,5 +1,6 @@
-package com.zip_boerga.eazy_school.aspects.audit;
+package com.zip_boerga.eazy_school.aspects.audit.legacy;
 
+@Deprecated
 public class AuditContext {
     private static final ThreadLocal<String> context = new ThreadLocal<>();
 
