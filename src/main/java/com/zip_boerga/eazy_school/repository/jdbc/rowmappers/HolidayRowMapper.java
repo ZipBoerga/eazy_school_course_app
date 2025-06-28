@@ -1,4 +1,4 @@
-package com.zip_boerga.eazy_school.repository.rowmappers;
+package com.zip_boerga.eazy_school.repository.jdbc.rowmappers;
 
 import com.zip_boerga.eazy_school.model.Holiday;
 import org.springframework.jdbc.core.RowMapper;

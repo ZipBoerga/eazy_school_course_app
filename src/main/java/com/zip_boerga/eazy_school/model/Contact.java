@@ -1,5 +1,6 @@
 package com.zip_boerga.eazy_school.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -12,8 +13,13 @@ import lombok.EqualsAndHashCode;
 // Validation should not be in Clean Arch domain model. Learning example
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Entity
+@Table(name = "contact_messages")
 public class Contact extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "contact_id")
     private int contactId;
 
     @NotBlank(message="Name must not be blank")

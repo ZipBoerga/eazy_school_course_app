@@ -1,6 +1,7 @@
-package com.zip_boerga.eazy_school.repository;
+package com.zip_boerga.eazy_school.repository.jdbc;
 
 import com.zip_boerga.eazy_school.model.Holiday;
+import com.zip_boerga.eazy_school.repository.interfaces.HolidaysRepository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class HolidaysRepositoryImpl implements HolidaysRepository {
+public class JdbcHolidayRepository implements HolidaysRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public HolidaysRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public JdbcHolidayRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

@@ -1,4 +1,4 @@
-package com.zip_boerga.eazy_school.repository;
+package com.zip_boerga.eazy_school.repository.interfaces;
 
 import com.zip_boerga.eazy_school.model.Contact;
 

@@ -2,7 +2,7 @@ package com.zip_boerga.eazy_school.service;
 
 import com.zip_boerga.eazy_school.model.Constants;
 import com.zip_boerga.eazy_school.model.Contact;
-import com.zip_boerga.eazy_school.repository.ContactRepository;
+import com.zip_boerga.eazy_school.repository.interfaces.ContactRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class ContactService {
     }
 
     public boolean updateMessageStatus(int id, String status) {
-        int changedRowsCount = contactRepository.updateMessageStatus(id, status);
-        return changedRowsCount != 0;
+        int result = contactRepository.updateMessageStatus(id, status);
+        return result != 0;
     }
 }
