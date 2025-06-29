@@ -19,7 +19,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/contact"))
+        http.csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/contact")
+                        .ignoringRequestMatchers("/public/**"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/messages").hasRole("ADMIN")
@@ -32,8 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
-                        // temporarily
-                        .requestMatchers("/api/debug/**").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                 ).formLogin(loginConfigurer -> loginConfigurer
                         .loginPage("/login")
                         .defaultSuccessUrl("/dashboard")
