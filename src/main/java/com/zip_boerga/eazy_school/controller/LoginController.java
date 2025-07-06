@@ -14,7 +14,7 @@ public class LoginController {
     public String displayLoginPage(
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout,
-            @RequestParam(value = "register", required = false) Boolean isRegistered,
+            @RequestParam(value = "register", required = false, defaultValue = "false") Boolean isRegistered,
             Model model
     ) {
         String message = null;

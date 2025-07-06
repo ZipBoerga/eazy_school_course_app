@@ -1,6 +1,6 @@
 package com.zip_boerga.eazy_school.service;
 
-import com.zip_boerga.eazy_school.model.Constants;
+import com.zip_boerga.eazy_school.Constants;
 import com.zip_boerga.eazy_school.model.Contact;
 import com.zip_boerga.eazy_school.repository.interfaces.ContactRepository;
 import jakarta.annotation.PostConstruct;
@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 

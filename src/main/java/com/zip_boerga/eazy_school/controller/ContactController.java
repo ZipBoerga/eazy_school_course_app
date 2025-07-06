@@ -1,12 +1,11 @@
 package com.zip_boerga.eazy_school.controller;
 
-import com.zip_boerga.eazy_school.model.Constants;
+import com.zip_boerga.eazy_school.Constants;
 import com.zip_boerga.eazy_school.model.Contact;
 import com.zip_boerga.eazy_school.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;

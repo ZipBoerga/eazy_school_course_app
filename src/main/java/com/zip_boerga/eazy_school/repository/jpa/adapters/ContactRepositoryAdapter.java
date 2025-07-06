@@ -1,12 +1,12 @@
-package com.zip_boerga.eazy_school.repository.jpa;
+package com.zip_boerga.eazy_school.repository.jpa.adapters;
 
 import com.zip_boerga.eazy_school.model.Contact;
 import com.zip_boerga.eazy_school.repository.interfaces.ContactRepository;
+import com.zip_boerga.eazy_school.repository.jpa.JpaContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

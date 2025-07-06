@@ -1,7 +1,8 @@
-package com.zip_boerga.eazy_school.repository.jpa;
+package com.zip_boerga.eazy_school.repository.jpa.adapters;
 
 import com.zip_boerga.eazy_school.model.Holiday;
 import com.zip_boerga.eazy_school.repository.interfaces.HolidaysRepository;
+import com.zip_boerga.eazy_school.repository.jpa.JpaHolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;

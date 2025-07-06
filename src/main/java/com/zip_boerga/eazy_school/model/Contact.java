@@ -11,10 +11,10 @@ import lombok.EqualsAndHashCode;
 
 
 // Validation should not be in Clean Arch domain model. Learning example
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "contact_messages")
+@Table(name = "contact_message")
 public class Contact extends BaseEntity {
 
     @Id
