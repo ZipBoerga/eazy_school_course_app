@@ -51,11 +51,11 @@ CREATE TABLE IF NOT EXISTS address
 
 CREATE TABLE IF NOT EXISTS user
 (
-    user_id     int AUTO_INCREMENT PRIMARY KEY,
+    user_id       int AUTO_INCREMENT PRIMARY KEY,
     name          varchar(100) NOT NULL,
     email         varchar(50)  NOT NULL,
     mobile_number varchar(20)  NOT NULL,
-    pwd           varchar(200) NOT NULL,
+    password      varchar(200) NOT NULL,
     role_id       int          NOT NULL,
     address_id    int          NULL,
     created_at    TIMESTAMP    NOT NULL,

@@ -19,4 +19,9 @@ public class UserRepositoryAdapter implements UserRepository {
     public User save(User user) {
         return jpaUserRepository.save(user);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return jpaUserRepository.readByEmail(email);
+    }
 }

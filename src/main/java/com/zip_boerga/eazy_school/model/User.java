@@ -15,8 +15,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @FieldsValueMatch.List({
         @FieldsValueMatch(
-                field = "pwd",
-                fieldMatch = "confirmPwd",
+                field = "password",
+                fieldMatch = "confirmPassword",
                 message = "Passwords do not match!"
         ),
         @FieldsValueMatch(
@@ -50,12 +50,12 @@ public class User extends BaseEntity {
     @NotBlank(message="Password must not be blank")
     @Size(min=5, message="Password must be at least 5 characters long")
     @PasswordValidator
-    private String pwd;
+    private String password;
 
     @NotBlank(message="Confirm Password must not be blank")
     @Size(min=5, message="Confirm Password must be at least 5 characters long")
     @Transient
-    private String confirmPwd;
+    private String confirmPassword;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = Role.class)
     @JoinColumn(name = "role_id", referencedColumnName = "roleId", nullable = false)

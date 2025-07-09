@@ -13,3 +13,7 @@ INSERT INTO role (`role_name`, `created_at`, `created_by`)
 VALUES
     ('ADMIN', CURDATE(), 'DBA'),
     ('STUDENT', CURDATE(), 'DBA');
+
+INSERT INTO user (`name`, `email`, `mobile_number`, `password`, `role_id`, `created_at`, `created_by`)
+VALUES
+    ('Admin', 'admin@eazyschool.com', '0123456789', 'admin', 1, CURDATE(), 'DBA');
