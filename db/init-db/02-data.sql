@@ -16,4 +16,4 @@ VALUES
 
 INSERT INTO user (`name`, `email`, `mobile_number`, `password`, `role_id`, `created_at`, `created_by`)
 VALUES
-    ('Admin', 'admin@eazyschool.com', '0123456789', 'admin', 1, CURDATE(), 'DBA');
+    ('Admin', 'admin@eazyschool.com', '0123456789', '$2a$12$G5F3NfCe.A9l2MOIh27lGe67bjGgjM3kc.Y9qFUWUicD4RYSwSCba', 1, CURDATE(), 'DBA');

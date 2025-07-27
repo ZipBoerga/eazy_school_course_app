@@ -17,9 +17,10 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("/contact")
                         .ignoringRequestMatchers("/public/**"))
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/messages").hasRole("ADMIN")
                         .requestMatchers("/messages/{id}/close").hasRole("ADMIN")
+                        .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/profile").authenticated()
                         .requestMatchers("/home", "/").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()

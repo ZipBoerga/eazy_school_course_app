@@ -39,10 +39,10 @@ CREATE TABLE IF NOT EXISTS address
 (
     address_id int AUTO_INCREMENT PRIMARY KEY,
     address1   varchar(200) NOT NULL,
-    address2   varchar(200)      DEFAULT NULL,
+    address2   varchar(200) DEFAULT NULL,
     city       varchar(50)  NOT NULL,
     state      varchar(50)  NOT NULL,
-    zip_code   int          NOT NULL,
+    zip_code   varchar(10)  NOT NULL,
     created_at TIMESTAMP    NOT NULL,
     created_by VARCHAR(50)  NOT NULL,
     updated_at TIMESTAMP    NULL DEFAULT NULL,

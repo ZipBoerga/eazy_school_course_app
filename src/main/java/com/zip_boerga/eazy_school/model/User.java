@@ -52,7 +52,6 @@ public class User extends BaseEntity {
     @PasswordValidator
     private String password;
 
-    @NotBlank(message="Confirm Password must not be blank")
     @Size(min=5, message="Confirm Password must be at least 5 characters long")
     @Transient
     private String confirmPassword;

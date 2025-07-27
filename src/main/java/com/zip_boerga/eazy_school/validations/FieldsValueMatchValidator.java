@@ -3,8 +3,10 @@ package com.zip_boerga.eazy_school.validations;
 import com.zip_boerga.eazy_school.validations.annotations.FieldsValueMatch;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapperImpl;
 
+@Slf4j
 public class FieldsValueMatchValidator implements ConstraintValidator<FieldsValueMatch, Object> {
     private String field;
     private String fieldMatch;
@@ -19,6 +21,10 @@ public class FieldsValueMatchValidator implements ConstraintValidator<FieldsValu
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         Object fieldValue = new BeanWrapperImpl(value).getPropertyValue(this.field);
         Object fieldMatchValue = new BeanWrapperImpl(value).getPropertyValue(this.fieldMatch);
+
+        if (fieldMatchValue == null) {
+            return true;
+        }
         return fieldValue != null && fieldValue.equals(fieldMatchValue);
     }
 }

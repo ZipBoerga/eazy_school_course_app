@@ -3,6 +3,7 @@ package com.zip_boerga.eazy_school.security;
 import com.zip_boerga.eazy_school.model.Role;
 import com.zip_boerga.eazy_school.model.User;
 import com.zip_boerga.eazy_school.repository.interfaces.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,18 +12,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class EazySchoolAuthenticationProvider implements AuthenticationProvider {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EazySchoolAuthenticationProvider(UserRepository userRepository) {
+    public EazySchoolAuthenticationProvider(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,8 +36,8 @@ public class EazySchoolAuthenticationProvider implements AuthenticationProvider 
         String password = authentication.getCredentials().toString();
         User user = userRepository.findByEmail(email);
 
-        if (user != null && user.getUserId() > 0 && password.equals(user.getPassword())) {
-            return new UsernamePasswordAuthenticationToken(user.getName(), null,
+        if (user != null && user.getUserId() > 0 && passwordEncoder.matches(password, user.getPassword())) {
+            return new UsernamePasswordAuthenticationToken(user.getEmail(), null,
                     getGrantedAuthorities(user.getRole()));
         } else {
             throw new BadCredentialsException("Invalid credentials!");
