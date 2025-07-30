@@ -9,8 +9,11 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @FieldsValueMatch.List({
@@ -65,4 +68,8 @@ public class User extends BaseEntity {
     // name in table, referenced col in entity class
     @JoinColumn(name = "address_id", referencedColumnName = "addressId", nullable = true)
     private Address address;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
+    private EazyClass eazyClass;
 }

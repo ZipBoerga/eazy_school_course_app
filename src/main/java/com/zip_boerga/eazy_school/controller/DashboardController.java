@@ -23,7 +23,7 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String displayDashboard(Model model, Authentication authentication, HttpSession session) {
-        User user = userService.getUserByEmail(authentication.getName());
+        User user = userService.getUserByEmail(authentication.getName()).orElseThrow(RuntimeException::new); // time crunch
         model.addAttribute("username", user.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
         session.setAttribute(Constants.LOGGED_IN_USER, user);

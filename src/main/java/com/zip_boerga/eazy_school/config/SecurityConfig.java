@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/messages").hasRole("ADMIN")
                         .requestMatchers("/messages/{id}/close").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/profile").authenticated()
                         .requestMatchers("/home", "/").permitAll()

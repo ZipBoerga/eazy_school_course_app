@@ -29,6 +29,7 @@ public class LoggerAspect {
 
     @AfterThrowing(value = "execution(* com.zip_boerga.eazy_school..*.*(..))", throwing = "ex")
     public void logException(JoinPoint joinPoint, Exception ex) {
-        log.error("{}: an exception happened due to: {}", joinPoint.getSignature().toString(), ex.getMessage());
+        log.error("{}: an exception happened due to: {}, ex type: {}",
+                joinPoint.getSignature().toString(), ex.getMessage(), ex.getClass().getName());
     }
 }

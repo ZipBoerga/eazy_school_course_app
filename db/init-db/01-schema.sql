@@ -39,10 +39,20 @@ CREATE TABLE IF NOT EXISTS address
 (
     address_id int AUTO_INCREMENT PRIMARY KEY,
     address1   varchar(200) NOT NULL,
-    address2   varchar(200) DEFAULT NULL,
+    address2   varchar(200)      DEFAULT NULL,
     city       varchar(50)  NOT NULL,
     state      varchar(50)  NOT NULL,
     zip_code   varchar(10)  NOT NULL,
+    created_at TIMESTAMP    NOT NULL,
+    created_by VARCHAR(50)  NOT NULL,
+    updated_at TIMESTAMP    NULL DEFAULT NULL,
+    updated_by VARCHAR(50)       DEFAULT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS class
+(
+    class_id   int AUTO_INCREMENT PRIMARY KEY,
+    name       varchar(100) NOT NULL,
     created_at TIMESTAMP    NOT NULL,
     created_by VARCHAR(50)  NOT NULL,
     updated_at TIMESTAMP    NULL DEFAULT NULL,
@@ -58,10 +68,13 @@ CREATE TABLE IF NOT EXISTS user
     password      varchar(200) NOT NULL,
     role_id       int          NOT NULL,
     address_id    int          NULL,
+    class_id      int          NULL,
     created_at    TIMESTAMP    NOT NULL,
     created_by    VARCHAR(50)  NOT NULL,
     updated_at    TIMESTAMP    NULL DEFAULT NULL,
     updated_by    VARCHAR(50)       DEFAULT NULL,
     FOREIGN KEY (role_id) REFERENCES role (role_id),
-    FOREIGN KEY (address_id) REFERENCES address (address_id)
+    FOREIGN KEY (address_id) REFERENCES address (address_id),
+    FOREIGN KEY (class_id) REFERENCES class (class_id)
 ) ENGINE = InnoDB;
+

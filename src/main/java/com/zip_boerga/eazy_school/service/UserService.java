@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -35,7 +38,7 @@ public class UserService {
         return user != null && user.getUserId() > 0;
     }
 
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
 
@@ -52,6 +55,11 @@ public class UserService {
         currentUser.getAddress().setState(currentProfile.getState());
         currentUser.getAddress().setZipCode(currentProfile.getZipCode());
         return userRepository.save(currentUser);
+    }
+
+    public List<User> findByClassId(int classId) {
+        return userRepository.findByClassId(classId);
+
     }
 
 }
