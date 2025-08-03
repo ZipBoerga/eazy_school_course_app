@@ -51,8 +51,7 @@ public class ClassesService {
 
     @Transactional
     public EazyClass deleteStudentFromClass(int userId, int classId) {
-        User student = userRepository.findById(userId).orElseThrow(() -> new
-                RuntimeException(String.format("Student with given ID %d is not found", userId)));
+        User student = userRepository.findById(userId);
         EazyClass eazyClass = eazyClassRepository.findById(classId).orElseThrow(() -> new
                 RuntimeException(String.format("Class with given ID %d is not found", (classId))));
 
@@ -65,8 +64,7 @@ public class ClassesService {
 
     @Transactional
     public void addStudentByEmail(String email, int classId) {
-        User student = userRepository.findByEmail(email).orElseThrow(() -> new
-                UsernameNotFoundException(String.format("Student with given email %s is not found", email)));
+        User student = userRepository.findByEmail(email);
         EazyClass eazyClass = eazyClassRepository.findById(classId).orElseThrow(() -> new
                 RuntimeException(String.format("Class with given ID %d is not found", (classId))));
         student.setEazyClass(eazyClass);

@@ -7,15 +7,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"courses"})
+@ToString(exclude = {"courses"})
 @FieldsValueMatch.List({
         @FieldsValueMatch(
                 field = "password",
@@ -33,29 +33,29 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @NotBlank(message="Name must not be blank")
-    @Size(min=3, message="Name must be at least 3 characters long")
+    @NotBlank(message = "Name must not be blank")
+    @Size(min = 3, message = "Name must be at least 3 characters long")
     private String name;
 
-    @NotBlank(message="Mobile number must not be blank")
-    @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
+    @NotBlank(message = "Mobile number must not be blank")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
     private String mobileNumber;
 
-    @NotBlank(message="Email must not be blank")
-    @Email(message = "Please provide a valid email address" )
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
-    @NotBlank(message="Confirm Email must not be blank")
-    @Email(message = "Please provide a valid confirm email address" )
+    @NotBlank(message = "Confirm Email must not be blank")
+    @Email(message = "Please provide a valid confirm email address")
     @Transient
     private String confirmEmail;
 
-    @NotBlank(message="Password must not be blank")
-    @Size(min=5, message="Password must be at least 5 characters long")
+    @NotBlank(message = "Password must not be blank")
+    @Size(min = 5, message = "Password must be at least 5 characters long")
     @PasswordValidator
     private String password;
 
-    @Size(min=5, message="Confirm Password must be at least 5 characters long")
+    @Size(min = 5, message = "Confirm Password must be at least 5 characters long")
     @Transient
     private String confirmPassword;
 
@@ -72,4 +72,8 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
     private EazyClass eazyClass;
+
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
+    private Set<Course> courses = new HashSet<>();
+
 }

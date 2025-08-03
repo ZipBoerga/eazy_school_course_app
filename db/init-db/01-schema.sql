@@ -78,3 +78,21 @@ CREATE TABLE IF NOT EXISTS user
     FOREIGN KEY (class_id) REFERENCES class (class_id)
 ) ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS course
+(
+    course_id int PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    fees VARCHAR(10) NOT NULL,
+    created_at    TIMESTAMP    NOT NULL,
+    created_by    VARCHAR(50)  NOT NULL,
+    updated_at    TIMESTAMP    NULL DEFAULT NULL,
+    updated_by    VARCHAR(50)       DEFAULT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS user_course
+(
+    user_id int NOT NULL,
+    course_id int NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
+) ENGINE = InnoDB;

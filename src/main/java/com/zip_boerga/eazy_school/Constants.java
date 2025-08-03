@@ -12,4 +12,5 @@ public class Constants {
     public static final String ADMIN = "admin";
     public static final String LOGGED_IN_USER = "loggedInUser";
     public static final String EAZY_CLASS = "eazyClass";
+    public static final String COURSE = "course";
 }

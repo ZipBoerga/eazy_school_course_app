@@ -1,9 +1,11 @@
 package com.zip_boerga.eazy_school.controller;
 
 import com.zip_boerga.eazy_school.Constants;
+import com.zip_boerga.eazy_school.model.Course;
 import com.zip_boerga.eazy_school.model.EazyClass;
 import com.zip_boerga.eazy_school.model.User;
 import com.zip_boerga.eazy_school.service.ClassesService;
+import com.zip_boerga.eazy_school.service.CourseService;
 import com.zip_boerga.eazy_school.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -24,11 +27,13 @@ import java.util.Optional;
 public class AdminController {
     private final ClassesService classesService;
     private final UserService userService;
+    private final CourseService coursesService;
 
     @Autowired
-    public AdminController(ClassesService classesService, UserService userService) {
+    public AdminController(ClassesService classesService, UserService userService, CourseService coursesService) {
         this.classesService = classesService;
         this.userService = userService;
+        this.coursesService = coursesService;
     }
 
     @GetMapping("/classes")
@@ -54,7 +59,7 @@ public class AdminController {
 
     @Transactional()
     @GetMapping("/students")
-    public ModelAndView getClassStudents(@RequestParam int classId, HttpSession session,
+    public ModelAndView displayClassStudents(@RequestParam int classId, HttpSession session,
                                          @RequestParam(value = "error", required = false) String error, Model model) {
         Optional<EazyClass> eazyClassWrapper = this.classesService.getClassById(classId);
         if (eazyClassWrapper.isEmpty()) {
@@ -101,5 +106,57 @@ public class AdminController {
         EazyClass updatedClass = this.classesService.deleteStudentFromClass(studentId, classId);
         httpSession.setAttribute(Constants.EAZY_CLASS, updatedClass);
         return new ModelAndView(String.format("redirect:/admin/students?classId=%d", classId));
+    }
+
+    @GetMapping("/courses")
+    public ModelAndView displayCourses() {
+        List<Course> courses = this.coursesService.getAllCourses();
+        ModelAndView modelAndView = new ModelAndView("courses_admin");
+        modelAndView.addObject("courses", courses);
+        modelAndView.addObject(Constants.COURSE, new Course());
+        return modelAndView;
+    }
+
+    @PostMapping("/course")
+    public String addNewCourse(@ModelAttribute("course") Course course) {
+        this.coursesService.saveCourse(course);
+        return "redirect:/admin/courses";
+    }
+
+    @GetMapping("/courses/students")
+    public ModelAndView displayCourseStudents(@RequestParam int id, HttpSession session,
+                                              @RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("course_students");
+        Course course = this.coursesService.getCourse(id);
+        modelAndView.addObject(Constants.COURSE, course);
+        modelAndView.addObject("student", new User());
+        session.setAttribute(Constants.COURSE, course);
+
+        if (error != null) {
+            modelAndView.addObject("errorMessage", "Invalid email entered.");
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/course/student")
+    public String addStudentToCourse(@ModelAttribute("student") User student, HttpSession session) {
+        Course course = (Course) session.getAttribute(Constants.COURSE);
+        String redirectUrl = String.format("redirect:/admin/courses/students?id=%d", course.getCourseId());
+        try {
+            Course updatedCourse = this.coursesService.addStudentToCourse(student.getEmail(), course.getCourseId());
+            session.setAttribute(Constants.COURSE, updatedCourse);
+        } catch (UsernameNotFoundException e) {
+            redirectUrl += "&error=true";
+        }
+        return redirectUrl;
+    }
+
+    @PostMapping("/course/removeStudent")
+    public String removeStudentFromCourse(@RequestParam int studentId, HttpSession session) {
+        Course course = (Course) session.getAttribute(Constants.COURSE);
+        Course updatedCourse = this.coursesService.removeStudentFromCourse(studentId, course.getCourseId());
+        session.setAttribute(Constants.COURSE, updatedCourse);
+        return String.format("redirect:/admin/courses/students?id=%d", course.getCourseId());
     }
 }

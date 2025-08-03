@@ -35,8 +35,7 @@ public class EazySchoolAuthenticationProvider implements AuthenticationProvider 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("No user found for given email"));
+        User user = userRepository.findByEmail(email);
 
         if (user != null && user.getUserId() > 0 && passwordEncoder.matches(password, user.getPassword())) {
             return new UsernamePasswordAuthenticationToken(user.getEmail(), null,

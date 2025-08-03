@@ -3,14 +3,12 @@ package com.zip_boerga.eazy_school.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "class")
 @EqualsAndHashCode(callSuper = true)
