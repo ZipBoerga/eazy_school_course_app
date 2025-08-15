@@ -15,9 +15,10 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf
                         .ignoringRequestMatchers("/contact")
-                        .ignoringRequestMatchers("/public/**"))
+                        .ignoringRequestMatchers("/public/**")
+                        .ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/messages").hasRole("ADMIN")
+                        .requestMatchers("/messages/**").hasRole("ADMIN")
                         .requestMatchers("/messages/{id}/close").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/dashboard").authenticated()
@@ -31,6 +32,8 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/student/**").hasRole("STUDENT")
+                        .requestMatchers("/api/**").hasRole("ADMIN")
                 ).formLogin(loginConfigurer -> loginConfigurer
                         .loginPage("/login")
                         .defaultSuccessUrl("/dashboard")

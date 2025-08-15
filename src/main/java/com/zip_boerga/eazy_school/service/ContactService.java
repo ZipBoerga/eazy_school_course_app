@@ -6,6 +6,7 @@ import com.zip_boerga.eazy_school.repository.interfaces.ContactRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,22 +28,26 @@ public class ContactService {
     }
 
     // i do not like semantics
-    public boolean saveMessageDetails(Contact contact) {
-        boolean isSaved = false;
+    public Contact saveMessageDetails(Contact contact) {
         contact.setStatus(Constants.OPEN);
-        int result = contactRepository.saveContactMessage(contact);
-        if (result > 0) {
-            isSaved = true;
-        }
-        return isSaved;
+        return contactRepository.saveContactMessage(contact);
     }
 
     public List<Contact> getMessages(String status) {
-        return contactRepository.findMessageByStatus(status);
+        return contactRepository.findByStatus(status);
+    }
+
+    public Page<Contact> getMessagesPaginated(String status, int pageNum, String sortDir, String sortField) {
+        int pageSize = 5;
+        return contactRepository.findByStatus(status, pageNum, pageSize, sortDir, sortField);
     }
 
     public boolean updateMessageStatus(int id, String status) {
         int result = contactRepository.updateMessageStatus(id, status);
         return result != 0;
+    }
+
+    public boolean deleteMessage(int id) {
+        return contactRepository.deleteById(id);
     }
 }

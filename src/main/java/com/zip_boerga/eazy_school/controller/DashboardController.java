@@ -26,6 +26,11 @@ public class DashboardController {
         User user = userService.getUserByEmail(authentication.getName()); // time crunch
         model.addAttribute("username", user.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
+
+        if (user.getEazyClass() != null) {
+            model.addAttribute("enrolledClass", user.getEazyClass().getName());
+        }
+
         session.setAttribute(Constants.LOGGED_IN_USER, user);
         return "dashboard";
     }

@@ -5,6 +5,11 @@ import com.zip_boerga.eazy_school.repository.interfaces.ContactRepository;
 import com.zip_boerga.eazy_school.repository.jpa.JpaContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,13 +26,12 @@ public class ContactRepositoryAdapter implements ContactRepository {
     }
 
     @Override
-    public int saveContactMessage(Contact contact) {
-        Contact savedContact = jpaContactRepository.save(contact);
-        return savedContact.getContactId();
+    public Contact saveContactMessage(Contact contact) {
+        return jpaContactRepository.save(contact);
     }
 
     @Override
-    public List<Contact> findMessageByStatus(String status) {
+    public List<Contact> findByStatus(String status) {
         return jpaContactRepository.findByStatus(status);
     }
 
@@ -44,5 +48,23 @@ public class ContactRepositoryAdapter implements ContactRepository {
         Contact updatedContact = jpaContactRepository.save(contactWrap.get());
 
         return updatedContact.getContactId();
+    }
+
+    @Override
+    public Page<Contact> findByStatus(String status, int pageNum, int pageSize, String sortDir, String sortField) {
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
+                sortDir.equals("asc") ? Sort.by(sortField).ascending()
+                        : Sort.by(sortField).descending());
+        return jpaContactRepository.findByStatus(status, pageable);
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        try {
+            jpaContactRepository.deleteById(id);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.zip_boerga.eazy_school.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
@@ -19,7 +20,7 @@ public class Contact extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "contact_id")
+    @JsonProperty("contactId")
     private int contactId;
 
     @NotBlank(message="Name must not be blank")
